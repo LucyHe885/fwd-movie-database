@@ -444,7 +444,7 @@ button:focus-visible {
     position: absolute;
     top: 74px;
     right: 0;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgb(24, 24, 24);
     width: 50%;
     height: 100vh;
     padding: 1rem;
@@ -452,8 +452,7 @@ button:focus-visible {
   }
 
   ul.nav-links.open{
-    align-items: end;
-    margin: 0;
+    margin-top: 18px;
   }
 
   .nav-links.open {
