@@ -13,7 +13,7 @@ const App = () => {
     <Router basename={`/${APP_FOLDER_NAME}`}>
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/about" element={<About />} />
         <Route path="/movie/:id" element={<MovieDetails />} />
