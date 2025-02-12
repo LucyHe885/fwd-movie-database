@@ -4,9 +4,9 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 
 export default defineConfig({
-  base: '/movie-database-lucy/',
+  base: '/movie-mania/',
   build: {
-    outDir: 'movie-database-lucy'
+    outDir: 'movie-mania'
   },
   plugins: [react()],
 })

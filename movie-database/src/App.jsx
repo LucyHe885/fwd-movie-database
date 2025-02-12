@@ -5,7 +5,7 @@ import Favorites from "./pages/Favorites";
 import About from "./pages/About";
 import MovieDetails from "./pages/MovieDetails";
 import Footer from "./components/Footer";
-import { APP_FOLDER_NAME } from "./globals/globals";
+import { APP_FOLDER_NAME } from "./globals";
 
 
 const App = () => {
