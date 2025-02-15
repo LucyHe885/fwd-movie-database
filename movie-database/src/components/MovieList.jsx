@@ -1,5 +1,6 @@
 import MovieCard from "./MovieCard";
 
+
 const MovieList = ({ movies, onFavoriteToggle, favorites }) => {
   return (
     <div className="movie-grid">

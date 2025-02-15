@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import MovieList from "../components/MovieList";
 import "../App.css";
 
-const Favorites = () => {
+const Favorites = ({ onFavoriteToggle }) => {
   const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
@@ -10,10 +10,17 @@ const Favorites = () => {
     setFavorites(storedFavorites);
   }, []);
 
+  //handle the toggling of a movie in and out of the favorites list
   const handleFavoriteToggle = (movie) => {
+    //filters the favorites array to remove the mmovie with the matching id
     const updatedFavorites = favorites.filter((fav) => fav.id !== movie.id);
     setFavorites(updatedFavorites);
+    //update list of favorites is saved back into localstrage
     localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+
+    if (onFavoriteToggle) {
+      onFavoriteToggle(movie);
+    }
   };
 
   return (

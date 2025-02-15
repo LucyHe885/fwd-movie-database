@@ -6,26 +6,31 @@ import "../App.css";
 const API_KEY = "d898368f19d84ace21f3b67e65807d39";
 const BASE_URL = "https://api.themoviedb.org/3";
 
-const MovieDetails = ({onFavoriteToggle, isFavorite: initialFavorite}) => {
+const MovieDetails = ({onFavoriteToggle, favorites}) => {
+  //extracts the movie id frome the url parameters
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
-  const [isFavorite, setIsFavorite] = useState(initialFavorite);
-
+  const [isFavorite, setIsFavorite] = useState(false);
+  //to fetch movie data when the component mounters, movie id and favorites
   useEffect(() => {
+    //fetch movie detials from api
     axios.get(`${BASE_URL}/movie/${id}`, { params: { api_key: API_KEY } })
-      .then(response => setMovie(response.data))
+    .then(response => {
+      setMovie(response.data);
+      //check if the movie is in the favorites list
+      const isFav = favorites.some((fav) => fav.id === response.data.id);
+      setIsFavorite(isFav);
+    })
       .catch(error => console.error("Error fetching movie details", error));
-  }, [id]);
+  }, [id, favorites]);
 
-  useEffect(() => {
-    setIsFavorite(initialFavorite);
-  }, [initialFavorite]);
-
+  //favorite status of movie
   const handleFavoriteClick = () => {
-    const updatedFavorite = !isFavorite;
-    setIsFavorite(updatedFavorite);
-    onFavoriteToggle(movie);
+    setIsFavorite(!isFavorite);
+    //update the favorites list
+    onFavoriteToggle(movie); 
   };
+
 
   if (!movie) return <p>Loading...</p>;
 
@@ -34,6 +39,7 @@ const MovieDetails = ({onFavoriteToggle, isFavorite: initialFavorite}) => {
       {/* Movie Poster */}
       <div className="movie-poster-container">
         <img 
+          //construct the img url
           src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} 
           alt={movie.title} 
           className="movie-poster"
@@ -60,7 +66,11 @@ const MovieDetails = ({onFavoriteToggle, isFavorite: initialFavorite}) => {
         </div>
         </div>
         <div className="detial-info">
+        {/* AI */}
+        {/* movies genres is an array of genre objects the contain a name property */}
+        {/* joins the array elements into a single string */}
         <p>Genres: {movie.genres.map(genre => genre.name).join(", ")}</p>
+        {/* .tolocaldatestring converts this date object into a string formatted according to the local convertions */}
         <p className="movie-year">{new Date(movie.release_date).toLocaleDateString().split('T')[0]}</p>
         <p>{Math.floor(movie.runtime / 60)}h {movie.runtime % 60}m</p>
         <p className="movie-rating">⭐ {movie.vote_average.toFixed(1)}</p>
